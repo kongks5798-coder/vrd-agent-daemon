@@ -49,8 +49,43 @@ async function generatePatch(job: Record<string, any>): Promise<{ patchCode: str
 ## AI 분석 결과
 ${job.fix_plan || JSON.stringify(job.analysis) || "분석 없음"}
 
+## VRD 실제 파일 구조 (반드시 이 목록에서만 경로 선택)
+
+### 서버 라우트 (server/routes/)
+admin-crud.ts, admin-help.ts, admin-notifications.ts, admin-staff.ts,
+affiliates.ts, agent-actions.ts, agent-bus.ts, ai-analytics.ts, ai-assistant.ts,
+ai-content-gen.ts, ai-insight.ts, ai-product.ts, ai-usage.ts, alimtalk.ts,
+anomaly.ts, auto-coupon-routes.ts, auto-reorder.ts, cart-recovery.ts, ceo-kpi.ts,
+cms.ts, crm-360.ts, cron.ts, cs-ai-reply.ts, cs-templates.ts, cs-tickets.ts,
+customer-auth.ts, customer-chat.ts, customer-journey.ts, customer-ltv.ts,
+customer-score.ts, customer-segments.ts, daily-report.ts, delivery-tracking.ts,
+display-order.ts, dynamic-pricing.ts, exchange-return.ts, health.ts,
+inquiry-board.ts, inventory-alerts.ts, inventory-auto-order.ts, kakao-alimtalk.ts,
+live-dashboard.ts, marketing.ts, multi-brand.ts, nl-query.ts, nps.ts, oms.ts,
+order-notes.ts, payment-analytics.ts, payments.ts, phone-otp.ts, portal.ts,
+product-marketing.ts, products.ts, push-notifications.ts, realtime-dashboard.ts,
+recommendations.ts, retention.ts, review-sentiment.ts, sales-analysis.ts,
+sales-heatmap.ts, segments.ts, semantic-search.ts, settlement.ts, sheets.ts,
+shipping-track.ts, staff-chat.ts, staff-report.ts, stock.ts, suspicious.ts,
+system-status.ts, vault-monitor.ts, vip-program.ts, webhooks.ts, wms.ts
+
+### 서버 핵심 파일
+server/routes.ts, server/storage.ts, server/db.ts, server/jarvis.ts
+shared/schema.ts
+
+### 클라이언트 페이지 (client/src/pages/)
+home.tsx, shop.tsx, product-detail.tsx, cart.tsx, checkout.tsx, mypage.tsx,
+login.tsx, products.tsx, search.tsx, wishlist.tsx, payment.tsx, payment-success.tsx,
+admin/dashboard-tab.tsx, admin/products-tab.tsx, admin/orders-tab.tsx,
+admin/customers-tab.tsx, admin/bug-hunter-tab.tsx, admin/banners-tab.tsx,
+admin/stats-tab.tsx, admin/reviews-tab.tsx, admin/inventory-tab.tsx,
+admin/marketing-tab.tsx, admin/settings-tab.tsx, admin/staff-tab.tsx,
+admin/coupons-tab.tsx, admin/exchange-return-tab.tsx, admin/shipping-track-tab.tsx,
+admin/segments-tab.tsx, admin/daily-report-tab.tsx, admin/cs-tickets-tab.tsx,
+admin/super-admin.tsx, admin/dashboard.tsx, admin/login.tsx
+
 ## 출력 형식 (반드시 지켜주세요)
-## 파일: [server/routes/xxx.ts 또는 client/src/pages/xxx.tsx 등 실제 경로]
+## 파일: [위 목록에 있는 정확한 경로만 사용]
 ### Before:
 \`\`\`typescript
 [기존 코드 — 수정할 부분만, 정확히 파일에 있는 코드]
