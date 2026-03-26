@@ -462,3 +462,4 @@ console.log(`[Daemon] GitHub: ${GITHUB_TOKEN ? "✅" : "⚠️ 없음"} | Vercel
 
 poll();
 setInterval(poll, POLL_INTERVAL_MS);
+
