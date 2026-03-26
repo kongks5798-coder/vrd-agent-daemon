@@ -1,0 +1,19 @@
+{
+  "name": "vrd-agent-daemon",
+  "version": "1.0.0",
+  "description": "VRD 자율 에이전트 데몬 — approved 잡 자동 패치 생성",
+  "main": "dist/daemon.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/daemon.js",
+    "dev": "ts-node daemon.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.0"
+  }
+}
