@@ -118,6 +118,13 @@ async function generateFullFilePatch(
   const prompt = `당신은 VRD 쇼핑몰(Vite+React18+Express5+Drizzle+Supabase) 버그 수정 전문 AI입니다.
 아래 버그를 분석하고, 수정된 파일의 **전체 내용**을 출력하세요.
 
+## VRD 기술 스택 (반드시 숙지)
+- DB: Supabase PostgreSQL (isnwvodylbhhcestgzjm)
+- 스토리지: Supabase Storage (버킷: bug-screenshots, vrd-products, banner-images) — AWS S3 사용 안 함
+- 업로드 엔드포인트: /api/admin/bug-hunter/upload (server/routes/admin-crud.ts 내부)
+- 인증: JWT (localStorage vrd_customer_token), requireAuth 미들웨어
+- 결제: TossPayments v2 Widget
+
 ## 버그 정보
 제목: ${job.feedback_title || "알 수 없음"}
 설명: ${job.feedback_desc || "없음"}
@@ -308,23 +315,16 @@ interface FilePatch {
 
 function parsePatchCode(patchCode: string): FilePatch[] {
   const patches: FilePatch[] = [];
-  const sections = patchCode.split(/\n(?=##\s*파일:)/);
-
-  for (const section of sections) {
-    const fileMatch = section.match(/##\s*파일:\s*(.+)/);
-    if (!fileMatch) continue;
-
-    const filePath = fileMatch[1].trim();
-    // 코드 블록 전체 추출
-    const codeMatch = section.match(/```(?:typescript|tsx|ts|js|jsx)?\n([\s\S]+?)```/);
-    if (!codeMatch) {
-      console.warn(`[Deploy] 코드 블록 없음: ${filePath}`);
-      continue;
+  // ## 파일: 로 시작하는 섹션 분리 (앞에 다른 내용 있어도 OK)
+  const fileRegex = /##\s*파일:\s*(.+?)\n[\s\S]*?```(?:typescript|tsx|ts|js|jsx)?\n([\s\S]+?)```/g;
+  let match;
+  while ((match = fileRegex.exec(patchCode)) !== null) {
+    const filePath = match[1].trim().replace(/`/g, "");
+    const newContent = match[2];
+    if (filePath && newContent && newContent.length > 50) {
+      patches.push({ filePath, newContent });
     }
-
-    patches.push({ filePath, newContent: codeMatch[1] });
   }
-
   return patches;
 }
 
